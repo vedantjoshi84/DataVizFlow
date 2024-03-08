@@ -24,7 +24,7 @@ Open following link in the browser:
 `http://localhost:5173/`
 
 
-![alt text](<Screenshot 2024-03-08 at 5.20.37 PM.png>)
+![screenshot](/image/screenshot.png)
 
 
 # Architecture Overview
@@ -35,5 +35,7 @@ The vue application running listens on the apiUrl continuously and displays the 
 
 # References:
 https://vuejs.org/guide/quick-start.html
+
 https://www.chartjs.org/docs/latest/getting-started/usage.html
+
 https://vue-chartjs.org/guide/#installation
