@@ -21,7 +21,6 @@ var datasets []Dataset
 var redisClient *redis.Client
 
 func main() {
-	// Initialize Redis client
 	redisClient = redis.NewClient(&redis.Options{
 		Addr:     "localhost:6379",
 		Password: "",
@@ -34,19 +33,14 @@ func main() {
 		return
 	}
 
-	// Create a new CORS handler with default options
 	corsHandler := cors.Default()
 
-	// Create a new HTTP request multiplexer (router)
 	mux := http.NewServeMux()
 
-	// Register the endpoint and handler function for /datasets
 	mux.HandleFunc("/datasets", handleGetDatasets)
 
-	// Wrap the request multiplexer with the CORS handler
 	handler := corsHandler.Handler(mux)
 
-	// Start the HTTP server with the CORS-wrapped handler
 	fmt.Println("Listening on port 8080...")
 	if err := http.ListenAndServe(":8080", handler); err != nil {
 		fmt.Println("Error starting HTTP server:", err)
@@ -93,6 +87,6 @@ func handleGetDatasets(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(response)
 
-	// Cache data in Redis for future requests
-	redisClient.Set(ctx, r.URL.Path, string(response), 0)
+	// Cache data in Redis with expiration time
+	redisClient.Set(ctx, r.URL.Path, string(response), time.Minute)
 }
